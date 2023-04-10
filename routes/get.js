@@ -17,14 +17,13 @@ router.get("/all", async (req, res) => {
 router.get("/each-page", async (req, res) => {
 
   try {
-    const {type, sortedBy } = req.body;
-    let page, pageSize;
+    const { page, pageSize, type, sortedBy } = req.query;
 
     if (page === undefined) page = 1;
     if (pageSize === undefined) pageSize = 10;
 
 
-    const data = await Asset.find({ Type: type.toLowerCase() }).sort().skip((page - 1) * pageSize).limit(pageSize);
+    const data = await Asset.find({ Type: type.toLowerCase() }).sort({ [sortedBy]: "asc" }).skip((page - 1) * pageSize).limit(pageSize);
 
     return res.json(data);
   } catch (err) {
