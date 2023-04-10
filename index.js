@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/add", addRouter);
-app.use("/get", getRouter)
+app.use("/get", getRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
