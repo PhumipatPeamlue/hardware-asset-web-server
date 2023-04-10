@@ -6,7 +6,11 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const newAsset = new Asset(req.body);
+    const obj = { ...req.body };
+    obj.Type = obj.Type.toLowerCase();
+
+    const newAsset = new Asset(obj);
+
     await newAsset.save();
     return res.json({
       msg: "add new Asset successfully"
