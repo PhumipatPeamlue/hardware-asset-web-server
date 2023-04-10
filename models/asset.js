@@ -17,4 +17,4 @@ const AssetSchema = new Schema({
   SerialNo: { type: String }
 })
 
-module.exports = mongoose.model("notebook-asset", AssetSchema);
+module.exports = mongoose.model("hardware-asset", AssetSchema);
