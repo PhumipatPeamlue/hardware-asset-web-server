@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+// require("dotenv").config();
 
 const addRouter = require("./routes/add");
 const getRouter = require("./routes/get");
 
 const { DB_URL, PORT } = process.env;
+console.log(DB_URL, POR);
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true
