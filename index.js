@@ -6,6 +6,7 @@ require("dotenv").config();
 const addRouter = require("./routes/add");
 const getRouter = require("./routes/get");
 const deleteRouter = require("./routes/delete");
+const editRotuer = require("./routes/edit");
 
 const { DB_URL, PORT } = process.env;
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/add", addRouter);
 app.use("/get", getRouter);
 app.use("/delete", deleteRouter);
+app.use("/edit", editRotuer);
 
 
 
