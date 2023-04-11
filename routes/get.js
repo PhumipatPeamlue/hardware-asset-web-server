@@ -31,10 +31,12 @@ router.get("/each-page", async (req, res) => {
   }
 });
 
-router.get("/pages/:pageSize", async (req, res) => {
+router.get("/pages/:pageSize/:type", async (req, res) => {
   try {
-    const pageSize = req.params["pageSize"];
-    const count = await Asset.countDocuments();
+    const pageSize = req.params.pageSize;
+    const type = req.params.type;
+    const filter = { Type: type }
+    const count = (await Asset.find(filter)).length;
     return res.json({
       "pages": Math.ceil(count / pageSize)
     });
