@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const addRouter = require("./routes/add");
 const getRouter = require("./routes/get");
+const deleteRouter = require("./routes/delete");
 
 const { DB_URL, PORT } = process.env;
 
@@ -18,6 +19,9 @@ app.use(cors());
 
 app.use("/add", addRouter);
 app.use("/get", getRouter);
+app.use("/delete", deleteRouter);
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
