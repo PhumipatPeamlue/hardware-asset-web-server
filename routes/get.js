@@ -56,10 +56,12 @@ router.get("/type/all", async (req, res) => {
   }
 });
 
-router.get("/search/:text", async (req, res) => {
+router.get("/search/:type/:text", async (req, res) => {
   try {
+    const type = req.params["type"];
     const text = req.params["text"];
     const data = await Asset.find({
+      Type: type,
       $or: [
         {"AssetNo": { "$regex": text, "$options": "i" }},
         {"BougthDate": { "$regex": text, "$options": "i" }},
