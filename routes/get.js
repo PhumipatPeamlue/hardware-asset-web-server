@@ -52,7 +52,6 @@ router.get("/each-page", async (req, res) => {
           ]
         })
         .skip((page - 1) * pageSize)
-        .limit(parseInt(pageSize))
     }
 
     return res.json({
