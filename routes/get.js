@@ -8,7 +8,11 @@ const router = express.Router();
 router.get("/all", async (req, res) => {
   try {
     const data = await Asset.find();
-    return res.json(data);
+    const total = await Asset.countDocuments();
+    return res.json({
+      total: total,
+      data: data
+    });
   } catch (err) {
     return res.status(400).json(err);
   }
@@ -53,7 +57,8 @@ router.get("/each-page", async (req, res) => {
     }
 
     return res.json({
-      data: data,
+      total: data.length,
+      data: data
     });
   } catch (err) {
     return res.status(400).json(err);
