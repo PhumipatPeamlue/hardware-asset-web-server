@@ -52,7 +52,10 @@ router.get("/each-page", async (req, res) => {
         .limit(parseInt(pageSize))
     }
 
-    return res.json(data);
+    return res.json({
+      data: data,
+      pages: 1
+    });
   } catch (err) {
     return res.status(400).json(err);
   }
@@ -110,7 +113,6 @@ router.get("/search/:type/:pageSize/:page/:text", async (req, res) => {
     })
       .skip((page - 1) * pageSize)
       .limit(parseInt(pageSize));
-
     return res.json({
       "total": data.length,
       "data": data,
