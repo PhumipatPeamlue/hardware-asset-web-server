@@ -17,13 +17,40 @@ router.get("/all", async (req, res) => {
 router.get("/each-page", async (req, res) => {
 
   try {
-    const { page, pageSize, type, sortedBy } = req.query;
-
+    const { page, pageSize, type, sortedBy, text } = req.query;
     if (page === undefined) page = 1;
     if (pageSize === undefined) pageSize = 10;
 
 
-    const data = await Asset.find({ Type: type.toLowerCase() }).sort({ [sortedBy]: "asc" }).skip((page - 1) * pageSize).limit(pageSize);
+    let data;
+    if (text === "") {
+      data = await Asset
+      .find({ Type: type.toLowerCase() })
+      .sort({ [sortedBy]: "asc" })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+    } else {
+      data = await Asset
+        .find({
+          Type: type,
+          $or: [
+            {"AssetNo": { "$regex": text, "$options": "i" }},
+            {"BougthDate": { "$regex": text, "$options": "i" }},
+            {"Brand": { "$regex": text, "$options": "i" }},
+            {"Duration": { "$regex": text, "$options": "i" }},
+            {"Expense": { "$regex": text, "$options": "i" }},
+            {"Expire": { "$regex": text, "$options": "i" }},
+            {"MSOffice": { "$regex": text, "$options": "i" }},
+            {"MTM": { "$regex": text, "$options": "i" }},
+            {"Model": { "$regex": text, "$options": "i" }},
+            {"Owner": { "$regex": text, "$options": "i" }},
+            {"Remark": { "$regex": text, "$options": "i" }},
+            {"SerialNo": { "$regex": text, "$options": "i" }},
+          ]
+        })
+        .skip((page - 1) * pageSize)
+        .limit(parseInt(pageSize))
+    }
 
     return res.json(data);
   } catch (err) {
@@ -58,9 +85,11 @@ router.get("/type/all", async (req, res) => {
   }
 });
 
-router.get("/search/:type/:text", async (req, res) => {
+router.get("/search/:type/:pageSize/:page/:text", async (req, res) => {
   try {
     const type = req.params["type"];
+    const pageSize = req.params["pageSize"];
+    const page = req.params["page"];
     const text = req.params["text"];
     const data = await Asset.find({
       Type: type,
@@ -78,7 +107,10 @@ router.get("/search/:type/:text", async (req, res) => {
         {"Remark": { "$regex": text, "$options": "i" }},
         {"SerialNo": { "$regex": text, "$options": "i" }},
       ]
-    });
+    })
+      .skip((page - 1) * pageSize)
+      .limit(parseInt(pageSize));
+
     return res.json({
       "total": data.length,
       "data": data,
