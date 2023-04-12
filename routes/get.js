@@ -54,7 +54,7 @@ router.get("/each-page", async (req, res) => {
 
     return res.json({
       data: data,
-      pages: 1
+      pages: data.length / pageSize
     });
   } catch (err) {
     return res.status(400).json(err);
