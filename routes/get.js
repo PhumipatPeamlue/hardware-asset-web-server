@@ -54,8 +54,8 @@ router.get("/each-page", async (req, res) => {
 
     return res.json({
       data: data,
-      dataLength: data.length,
-      pageSize: pageSize
+      dataLength: 3,
+      pageSize: 2
     });
   } catch (err) {
     return res.status(400).json(err);
