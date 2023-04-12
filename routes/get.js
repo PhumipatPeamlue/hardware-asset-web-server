@@ -32,7 +32,6 @@ router.get("/each-page", async (req, res) => {
       .find({ Type: type.toLowerCase() })
       .sort({ [sortedBy]: "asc" })
       .skip((page - 1) * pageSize)
-      .limit(pageSize);
     } else {
       data = await Asset
         .find({
